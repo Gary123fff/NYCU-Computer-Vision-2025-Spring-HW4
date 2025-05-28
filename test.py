@@ -97,8 +97,7 @@ def run_test_inference(degraded_npz_path, model_path, save_dir='test_outputs', n
     else:
         num_images = min(num_images, len(filenames))
 
-    print(
-        f"Processing {num_images} images out of {len(filenames)} total images...")
+    print(f"Processing {num_images} images out of {len(filenames)} total images...")
 
     test_dataset = PromptIRDataset(
         degraded_npz_path=degraded_npz_path,
@@ -122,20 +121,20 @@ def run_test_inference(degraded_npz_path, model_path, save_dir='test_outputs', n
             output_patches = model(degraded_patches)
             output_full = reconstruct_from_patches(
                 output_patches, patch_size, stride, full_size)
-            output_img = output_full.clamp(0, 1).cpu()
-            output_img = output_img.permute(1, 2, 0)
-            output_img_np = (output_img.numpy() * 255).astype(np.uint8)
 
-            if image_idx < len(filenames):
-                filename = filenames[image_idx]
-                predictions_dict[filename] = output_img_np
-                print(f"Processed: {filename} -> shape: {output_img_np.shape}")
+            # 轉成 (H,W,3) uint8
+            output_img_np = output_full.clamp(0, 1).cpu().permute(1, 2, 0).numpy()
+            output_img_np = (output_img_np * 255).astype(np.uint8)
 
-            if batch_idx < 10:
-                save_test_comparison_image(
-                    output_full, save_path=save_dir, idx=batch_idx)
+            filename = str(image_idx)+".png"
+            predictions_dict[filename] = output_img_np
+            print(f"Processed: {filename} -> shape: {output_img_np.shape}")
+
+            vis_img = output_full.clamp(0, 1).cpu()
+            save_test_comparison_image(vis_img, save_path=save_dir, idx=batch_idx)
 
             image_idx += 1
+
 
     pred_save_path = os.path.join(save_dir, 'pred.npz')
     os.makedirs(save_dir, exist_ok=True)
@@ -143,14 +142,13 @@ def run_test_inference(degraded_npz_path, model_path, save_dir='test_outputs', n
 
     print(f"\nPredictions saved to: {pred_save_path}")
     print(f"Contains {len(predictions_dict)} image predictions")
-    print(f"Image format: (H, W, 3) - Height, Width, Channels")
+    print(f"Image format: (3, H, W) - Channels, Height, Width")
     print(f"Data type: uint8, range: 0-255")
     print(f"Visualization images saved to: {save_dir}")
 
     try:
         saved_data = np.load(pred_save_path)
-        print(
-            f"\nVerification: Successfully loaded {len(saved_data.files)} predicted images")
+        print(f"\nVerification: Successfully loaded {len(saved_data.files)} predicted images")
         for i, filename in enumerate(list(saved_data.files)[:3]):
             img_data = saved_data[filename]
             img_shape = img_data.shape
@@ -159,10 +157,10 @@ def run_test_inference(degraded_npz_path, model_path, save_dir='test_outputs', n
             img_max = img_data.max()
             print(
                 f"  - {filename}: shape={img_shape}, dtype={img_dtype}, range=[{img_min}, {img_max}]")
-            if len(img_shape) == 3 and img_shape[2] == 3:
-                print("    Correct format: (H, W, 3)")
+            if len(img_shape) == 3 and img_shape[0] == 3:
+                print("    Correct format: (3, H, W)")
             else:
-                print(f"    Wrong format! Expected (H, W, 3), got {img_shape}")
+                print(f"    Wrong format! Expected (3, H, W), got {img_shape}")
         saved_data.close()
     except Exception as e:
         print(f"Error verifying saved file: {e}")
