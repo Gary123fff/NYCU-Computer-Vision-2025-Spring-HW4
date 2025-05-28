@@ -161,7 +161,7 @@ conda activate cv
 ```
 
 3. Download the dataset 
-- Download the dataset from the [LINK]([https://drive.google.com/file/d/1bEIU9TZVQa-AF_z6JkOKaGp4wYGnqQ8w/view?usp=drive_link])
+- Download the dataset from the [LINK]([[https://drive.google.com/file/d/13JXJ_hIdcloC63sS-vF3wFQLsUP1sMz5/view](https://drive.google.com/file/d/1bEIU9TZVQa-AF_z6JkOKaGp4wYGnqQ8w/view?usp=drive_link)]([https://drive.google.com/file/d/1B0qWNzQZQmfQP7x7o4FDdgb9GvPDoFzI/view](https://drive.google.com/file/d/1bEIU9TZVQa-AF_z6JkOKaGp4wYGnqQ8w/view?usp=drive_link)))
 - Put it in the following structure
 ```
 NYCU-Computer-Vision-2025-Spring-HW4
