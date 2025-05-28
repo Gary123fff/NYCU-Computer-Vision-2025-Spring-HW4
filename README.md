@@ -146,6 +146,18 @@ Dataset is randomly split into 99.5% training and 0.5% validation subsets.
 
 Validation batch size is fixed at 9 patches to monitor PSNR during training.
 
+## References
+### Paper :
+1. PromptIR
+Potlapalli, Vaishnav, et al. "PromptIR: Prompting for All-in-One Blind Image Restoration." NeurIPS, 2023.
+2. Restormer 
+Zamir, Syed Waqas, et al. "Restormer: Efficient transformer for high-resolution image restoration." CVPR, 2022.
+3. Vision Transformer
+Dosovitskiy, Alexey, et al. "An image is worth 16x16 words: Transformers for image recognition at scale." ICLR, 2021.
+4. Squeeze-and-Excitation Layer
+Hu, Jie, Li Shen, and Gang Sun. "Squeeze-and-excitation networks." CVPR, 2018.
+### Github : 
+https://github.com/va1shn9v/PromptIR
 
 ---
 ## How to install
