@@ -38,7 +38,7 @@ if __name__ == '__main__':
     elif args.mode == 'test':
         process_test_degraded_images(base_path='hw4_realse_dataset/test')
         run_test_inference(
-            degraded_npz_path='output_npz_patches/train_degraded_patches.npz',
+            degraded_npz_path='output_npz_patches/test_degraded_patches.npz',
             model_path='checkpoints/random.pth',
             save_dir='test_outputs',
             num_images=5
