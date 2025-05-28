@@ -74,7 +74,7 @@ Each CSA module contains two attention flows:
 
 Both use multi-head attention and are followed by SE (Squeeze-and-Excitation) blocks to reweight channels. This helps the model focus more on important features while fusing encoder and decoder outputs.
 
-33# 2.2.4 Skip Connections and Fusion
+### 2.2.4 Skip Connections and Fusion
 For each decoder level, I upsample the features from the previous level and concatenate them with the corresponding encoder outputs. But instead of directly adding them, I first reduce the channel size using a 1×1 convolution before feeding them into the decoder transformer blocks. This improves fusion quality and keeps computation in check.
 In total, my decoder mirrors the encoder:
 Upsample → Concatenate with encoder → Reduce channels → Decode
