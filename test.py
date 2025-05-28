@@ -123,8 +123,9 @@ def run_test_inference(degraded_npz_path, model_path, save_dir='test_outputs', n
                 output_patches, patch_size, stride, full_size)
 
             # 轉成 (H,W,3) uint8
-            output_img_np = output_full.clamp(0, 1).cpu().permute(1, 2, 0).numpy()
+            output_img_np = output_full.clamp(0, 1).cpu().numpy()
             output_img_np = (output_img_np * 255).astype(np.uint8)
+            print(output_img_np.shape)
 
             filename = str(image_idx)+".png"
             predictions_dict[filename] = output_img_np
