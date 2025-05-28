@@ -202,5 +202,7 @@ python main.py
 ```
 ## Performance
 ![Alt Text](./random.png)
+![Alt Text](./result(1).png)
+![Alt Text](./result(2).png)
 
 
